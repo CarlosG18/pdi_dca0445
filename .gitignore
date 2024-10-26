@@ -1,0 +1,48 @@
+# Diretórios de build
+/build/
+/bin/
+/obj/
+
+# Arquivos de saída de compilação
+*.o
+*.exe
+*.out
+*.a
+*.so
+*.dylib
+*.dll
+
+# Arquivos de configurações de IDEs
+*.idea/
+*.vscode/
+*.project
+*.cproject
+*.classpath
+*.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de sistema
+*.DS_Store
+Thumbs.db
+
+# Arquivos temporários e de backup
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+*.log
+
+# Imagens e outros arquivos gerados
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+
+# Outros
+*.zip
+*.tar.gz
+*.tar
+*.tgz
