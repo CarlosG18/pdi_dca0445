@@ -1,0 +1,3 @@
+/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles/trocaregioes.dir
+/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles/edit_cache.dir
+/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles/rebuild_cache.dir
