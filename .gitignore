@@ -34,13 +34,6 @@ Thumbs.db
 *~
 *.log
 
-# Imagens e outros arquivos gerados
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-
 # Outros
 *.zip
 *.tar.gz

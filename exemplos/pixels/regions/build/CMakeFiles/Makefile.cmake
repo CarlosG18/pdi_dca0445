@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/CMakeLists.txt"
+  "/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/CMakeLists.txt"
   "CMakeFiles/3.30.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.30.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.30.3/CMakeSystem.cmake"
@@ -133,5 +133,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/pixels.dir/DependInfo.cmake"
+  "CMakeFiles/regions.dir/DependInfo.cmake"
   )

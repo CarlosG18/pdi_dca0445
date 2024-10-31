@@ -54,16 +54,16 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels
+CMAKE_SOURCE_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build
+CMAKE_BINARY_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/pixels.dir/all
+all: CMakeFiles/regions.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/pixels.dir/clean
+clean: CMakeFiles/regions.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/pixels.dir
+# Target rules for target CMakeFiles/regions.dir
 
 # All Build rule for target.
-CMakeFiles/pixels.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pixels.dir/build.make CMakeFiles/pixels.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pixels.dir/build.make CMakeFiles/pixels.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles --progress-num=1,2 "Built target pixels"
-.PHONY : CMakeFiles/pixels.dir/all
+CMakeFiles/regions.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regions.dir/build.make CMakeFiles/regions.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regions.dir/build.make CMakeFiles/regions.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build/CMakeFiles --progress-num=1,2 "Built target regions"
+.PHONY : CMakeFiles/regions.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/pixels.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/pixels.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles 0
-.PHONY : CMakeFiles/pixels.dir/rule
+CMakeFiles/regions.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/regions.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build/CMakeFiles 0
+.PHONY : CMakeFiles/regions.dir/rule
 
 # Convenience name for target.
-pixels: CMakeFiles/pixels.dir/rule
-.PHONY : pixels
+regions: CMakeFiles/regions.dir/rule
+.PHONY : regions
 
 # clean rule for target.
-CMakeFiles/pixels.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pixels.dir/build.make CMakeFiles/pixels.dir/clean
-.PHONY : CMakeFiles/pixels.dir/clean
+CMakeFiles/regions.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regions.dir/build.make CMakeFiles/regions.dir/clean
+.PHONY : CMakeFiles/regions.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

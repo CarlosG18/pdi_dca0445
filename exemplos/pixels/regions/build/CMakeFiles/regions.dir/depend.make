@@ -1,2 +1,2 @@
-# Empty dependencies file for trocaregioes.
+# Empty dependencies file for regions.
 # This may be replaced when dependencies are built.

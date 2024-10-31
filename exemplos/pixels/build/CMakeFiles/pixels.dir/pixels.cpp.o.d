@@ -1,5 +1,5 @@
-CMakeFiles/trocaregioes.dir/trocaregioes.cpp.o: \
- /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/trocaregioes.cpp \
+CMakeFiles/pixels.dir/pixels.cpp.o: \
+ /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/pixels.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/14.2.1/iostream \
  /usr/include/c++/14.2.1/bits/requires_hosted.h \
  /usr/include/c++/14.2.1/x86_64-pc-linux-gnu/bits/c++config.h \

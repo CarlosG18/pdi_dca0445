@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/trocaregioes.cpp" "CMakeFiles/trocaregioes.dir/trocaregioes.cpp.o" "gcc" "CMakeFiles/trocaregioes.dir/trocaregioes.cpp.o.d"
+  "/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/pixels.cpp" "CMakeFiles/pixels.dir/pixels.cpp.o" "gcc" "CMakeFiles/pixels.dir/pixels.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels
+CMAKE_SOURCE_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build
+CMAKE_BINARY_DIR = /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build/CMakeFiles /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/exemplos/pixels/regions/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,41 +117,41 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named pixels
+# Target rules for targets named regions
 
 # Build rule for target.
-pixels: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 pixels
-.PHONY : pixels
+regions: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 regions
+.PHONY : regions
 
 # fast build rule for target.
-pixels/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pixels.dir/build.make CMakeFiles/pixels.dir/build
-.PHONY : pixels/fast
+regions/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regions.dir/build.make CMakeFiles/regions.dir/build
+.PHONY : regions/fast
 
-pixels.o: pixels.cpp.o
-.PHONY : pixels.o
+regions.o: regions.cpp.o
+.PHONY : regions.o
 
 # target to build an object file
-pixels.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pixels.dir/build.make CMakeFiles/pixels.dir/pixels.cpp.o
-.PHONY : pixels.cpp.o
+regions.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regions.dir/build.make CMakeFiles/regions.dir/regions.cpp.o
+.PHONY : regions.cpp.o
 
-pixels.i: pixels.cpp.i
-.PHONY : pixels.i
+regions.i: regions.cpp.i
+.PHONY : regions.i
 
 # target to preprocess a source file
-pixels.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pixels.dir/build.make CMakeFiles/pixels.dir/pixels.cpp.i
-.PHONY : pixels.cpp.i
+regions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regions.dir/build.make CMakeFiles/regions.dir/regions.cpp.i
+.PHONY : regions.cpp.i
 
-pixels.s: pixels.cpp.s
-.PHONY : pixels.s
+regions.s: regions.cpp.s
+.PHONY : regions.s
 
 # target to generate assembly for a file
-pixels.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pixels.dir/build.make CMakeFiles/pixels.dir/pixels.cpp.s
-.PHONY : pixels.cpp.s
+regions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/regions.dir/build.make CMakeFiles/regions.dir/regions.cpp.s
+.PHONY : regions.cpp.s
 
 # Help Target
 help:
@@ -161,10 +161,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... pixels"
-	@echo "... pixels.o"
-	@echo "... pixels.i"
-	@echo "... pixels.s"
+	@echo "... regions"
+	@echo "... regions.o"
+	@echo "... regions.i"
+	@echo "... regions.s"
 .PHONY : help
 
 
