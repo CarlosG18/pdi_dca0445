@@ -519,7 +519,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_atividades_unidade_1">1. Atividades Unidade 1</a>
 <ul class="sectlevel2">
 <li><a href="#_prática_1_manipulando_pixels_em_uma_imagem_regions_cpp">1.1. Prática 1 - Manipulando pixels em uma imagem (regions.cpp)</a></li>
-<li><a href="#_prática_2">1.2. Prática 2</a></li>
+<li><a href="#_prática_2_manipulando_pixels_em_uma_imagem_trocaregioes_cpp">1.2. Prática 2 - Manipulando pixels em uma imagem (trocaregioes.cpp)</a></li>
 <li><a href="#_prática_3">1.3. Prática 3</a></li>
 <li><a href="#_prática_4">1.4. Prática 4</a></li>
 </ul>
@@ -629,20 +629,69 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </div>
 </div>
 <div class="sect2">
-<h3 id="_prática_2">1.2. Prática 2</h3>
+<h3 id="_prática_2_manipulando_pixels_em_uma_imagem_trocaregioes_cpp">1.2. Prática 2 - Manipulando pixels em uma imagem (trocaregioes.cpp)</h3>
+<div class="paragraph">
+<p>Foi desenvolvido um programa chamado "trocaregioes.cpp" com base no código "pixels.cpp" disponibilizado <a href="https://agostinhobritojr.github.io/tutorial/pdi/pixels.html">aqui</a>. Esse novo programa realiza uma transformação na imagem fornecida, trocando os quadrantes dispostos em diagonal. O usuário fornece uma imagem, e o programa divide-a em quatro quadrantes iguais. Em seguida, os quadrantes localizados em posições diagonais são trocados entre si, gerando uma nova composição visual onde a parte superior esquerda se alterna com a inferior direita e a parte superior direita com a inferior esquerda. Essa modificação altera a disposição da imagem, destacando novos detalhes na estrutura visual.</p>
+</div>
+<div class="paragraph">
+<p>O código utilizado para realizar essa prática esta descrito logo abaixo:</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="cpp"><span></span><span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;iostream&gt;</span>
-<span class="tok-k">using</span><span class="tok-w"> </span><span class="tok-k">namespace</span><span class="tok-w"> </span><span class="tok-nn">std</span><span class="tok-p">;</span>
+<span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;opencv2/opencv.hpp&gt;</span>
 
-<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">main</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-p">{</span>
-<span class="tok-w">    </span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Exemplo de código para a Prática 2&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">endl</span><span class="tok-p">;</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">argc</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">char</span><span class="tok-o">**</span><span class="tok-w"> </span><span class="tok-n">argv</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">image</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Rect</span><span class="tok-w"> </span><span class="tok-n">rect</span><span class="tok-p">(</span><span class="tok-mi">20</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">50</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">30</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">30</span><span class="tok-p">);</span>
+
+<span class="tok-w">    </span><span class="tok-n">image</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">imread</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">],</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">IMREAD_GRAYSCALE</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-o">!</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">data</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;nao abriu!&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">endl</span><span class="tok-p">;</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// obtendo os quadrantes</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">q1</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">image</span><span class="tok-p">(</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Rect</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">));</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">q2</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">image</span><span class="tok-p">(</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Rect</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">));</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">q3</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">image</span><span class="tok-p">(</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Rect</span><span class="tok-p">(</span><span class="tok-mi">0</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">));</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">q4</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">image</span><span class="tok-p">(</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Rect</span><span class="tok-p">(</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">,</span><span class="tok-n">image</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-o">/</span><span class="tok-mi">2</span><span class="tok-p">));</span>
+
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">RowUp</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">RowDown</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">FinalImage</span><span class="tok-p">;</span>
+
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">hconcat</span><span class="tok-p">(</span><span class="tok-n">q4</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">q3</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">RowUp</span><span class="tok-p">);</span><span class="tok-w"> </span><span class="tok-c1">// concatena horizontalmente duas matrizes (images)</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">hconcat</span><span class="tok-p">(</span><span class="tok-n">q2</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">q1</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">RowDown</span><span class="tok-p">);</span><span class="tok-w"> </span><span class="tok-c1">// concatena horizontalmente duas matrizes (images)</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">vconcat</span><span class="tok-p">(</span><span class="tok-n">RowUp</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">RowDown</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">FinalImage</span><span class="tok-p">);</span><span class="tok-w"> </span><span class="tok-c1">// concatena verticalmente duas matrizes (images)</span>
+
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">namedWindow</span><span class="tok-p">(</span><span class="tok-s">&quot;janela&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">WINDOW_AUTOSIZE</span><span class="tok-p">);</span>
+
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">imshow</span><span class="tok-p">(</span><span class="tok-s">&quot;janela&quot;</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">FinalImage</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">waitKey</span><span class="tok-p">();</span>
 <span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_comentários_sobre_o_código_2">1.2.1. Comentários sobre o código</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A imagem foi separada em 4 sub-imagens definindo as imagens de cada quadrante;</p>
+</li>
+<li>
+<p>Em seguida foi feito a concatenação das duas imagens do quadrante na horientação horizontal do <strong>q4&#8594;q3</strong> e do <strong>q2&#8594;q1</strong>;</p>
+</li>
+<li>
+<p>Por fim é feito a concatenação vertical das duas linhas concatenadas gerando a imagem com os quadrantes diagonais trocados.</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>imagem::pratica2_resposta.png[Resposta da Prática 2]</p>
+<p>A Figura 2 ilustra o resultado obtido:</p>
+</div>
+<div id="image-result2" class="imageblock">
+<div class="content">
+<img src="./figs/resultado_pratica2.png" alt="Resultado da Prática 2">
+</div>
+<div class="title">Figura 2. resultado_pratica2.png</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -711,7 +760,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2024-10-31 08:32:40 -0300
+Última atualização 2024-11-01 08:07:23 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
