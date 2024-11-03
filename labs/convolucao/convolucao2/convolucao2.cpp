@@ -29,6 +29,10 @@ float* transform_matriz_for_vetor(float** matriz, int dimensao){
 
 float* create_mask(int dimensao,std::string tipo){
   float** matriz = new float*[dimensao*dimensao];
+  int limit_inf =(dimensao-1)/2;
+  int limit_sup = (dimensao-1)/2;
+  int elemento_central_laplacian = 0;
+  
 
   for (int i = 0; i < dimensao; i++) {
         matriz[i] = new float[dimensao];
@@ -72,21 +76,27 @@ float* create_mask(int dimensao,std::string tipo){
           matriz[i][j] = 0;
         }
       }else if(tipo == "laplacian"){
-        //elemento central
-        if(i == dimensao / 2 && j == dimensao / 2){
-          matriz[i][j] = 0;
-        }
-        
-        if(j < abs((dimensao-1)/2 - i) || j > ((dimensao-1)/2 + i)-(dimensao-1)/2){
-          std::cout << "i: " << i << ", j: " << j << std::endl; 
-          std::cout << "entrou: " << "j < " << abs((dimensao-1)/2 - i) << " || j >: " << (dimensao-1)/2 + i << std::endl;
+        if(j < limit_inf || j > limit_sup){
           matriz[i][j] = 0;
         }else{
           matriz[i][j] = -1;
+          elemento_central_laplacian += 1;
         }
       }
-      std::cout << "" << std::endl;
     }
+    std::cout << limit_inf << " " << limit_sup << std::endl;
+    if(i < (dimensao-1)/2){
+      limit_inf -= 1;
+      limit_sup += 1;
+    }else{
+      limit_inf += 1;
+      limit_sup -= 1;
+    }
+  }
+
+  if(tipo == "laplacian"){
+    elemento_central_laplacian -= 1;
+    matriz[(dimensao-1)/2][(dimensao-1)/2] = elemento_central_laplacian;
   }
 
 
@@ -187,7 +197,7 @@ int main(int, char* argv[]) {
         printmask(mask);
         break;
       case 'l':
-        mask = cv::Mat(3, 3, CV_32F, laplacian);
+        mask = cv::Mat(dimensao, dimensao, CV_32F, laplacian);
         printmask(mask);
         break;
     }
