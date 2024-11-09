@@ -4,15 +4,6 @@
 #include "../camera.hpp"
 #include <cmath>    // Para abs e fabs
 
-void imprimir_vetor(float* vetor, int dimensao) {
-    for (int i = 0; i < dimensao; ++i) {
-        for (int j = 0; j < dimensao; ++j) {
-            std::cout << std::fixed << std::setprecision(2) << vetor[i * dimensao + j] << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
 float* transform_matriz_for_vetor(float** matriz, int dimensao){
   int tam_vetor = dimensao*dimensao;
   float* vetor = new float[dimensao*dimensao];
