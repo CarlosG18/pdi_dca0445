@@ -8,6 +8,8 @@
 
 ## 🚀 Unidade I
 
+Na Unidade 1 da disciplina de `Processamento Digital de Imagens`, foram abordados os fundamentos essenciais para a compreensão e manipulação de imagens digitais. Iniciamos com uma **introdução aos fundamentos de imagens digitais**, onde exploramos as etapas do processamento de imagens e a representação digital das mesmas. Em seguida, conhecemos a **biblioteca OpenCV**, com duas aulas práticas em laboratório, que permitiram aplicar conceitos em tarefas reais. Estudamos as relações entre pixels e as transformações geométricas aplicadas em imagens, além dos **modelos de cor**. A **manipulação de histogramas** foi abordada, destacando a importância da distribuição de intensidade para o realce de imagens. Finalmente, discutimos os princípios da **convolução digital e filtros espaciais**, essenciais para a aplicação de técnicas de suavização e realce em imagens.
+
 ### 🎯 Atividades/projetos
 
-- [📌 ]()
+- [📌 link das atividades](https://carlosg18.github.io/pdi_dca0445/)

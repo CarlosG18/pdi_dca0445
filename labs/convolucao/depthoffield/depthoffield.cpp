@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
     double width, height;
     cv::Mat frame, framegray, frameFiltered, frame32f, image_final;
     cv::Mat mask(3, 3, CV_32F);
-
+    cv::Mat maximos8U, maximosColor;
     cv::Mat resultado;
 
     float laplacian[] = {0, -1, 0, -1, 4, -1, 0, -1, 0};
@@ -19,6 +19,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    //obtendo as dimensões do video
     width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
     height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 
@@ -48,21 +49,16 @@ int main(int argc, char** argv) {
         }
 
         // Converter maximos para o mesmo tipo e número de canais de frame antes de somar
-        cv::Mat maximos8U, maximosColor;
+        
         maximos.convertTo(maximos8U, CV_8U);
         cv::cvtColor(maximos8U, maximosColor, cv::COLOR_GRAY2BGR); // Converte para 3 canais
 
-        // Somar o frame e maximosColor
-        
-        cv::add(frame, maximosColor, resultado);
-
-        cv::imshow("Resultado", resultado);
+        cv::imshow("Resultado", maximosColor);
 
         if (cv::waitKey(30) >= 0) break;
     }
 
-    // Salvar a imagem final
-    if (cv::imwrite("output_image.jpg", resultado)) {
+    if (cv::imwrite("output_image.jpg", maximosColor)) {
         std::cout << "Imagem salva com sucesso como 'output_image.jpg'" << std::endl;
     } else {
         std::cerr << "Erro ao salvar a imagem!" << std::endl;
