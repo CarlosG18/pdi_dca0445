@@ -523,7 +523,14 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_prática_3_filtragem_no_domínio_espacial_i_convolução">1.3. Prática 3 - Filtragem no domínio espacial I - Convolução</a></li>
 </ul>
 </li>
-<li><a href="#_bibliografia">2. Bibliografia</a></li>
+<li><a href="#_atividades_unidade_2">2. Atividades Unidade 2</a>
+<ul class="sectlevel2">
+<li><a href="#_prática_1_obtendo_o_espectro_de_magnitude">2.1. Prática 1 - Obtendo o espectro de Magnitude</a></li>
+<li><a href="#_prática_2_criando_arte_com_pontilhismo_usando_o_algoritmo_de_canny">2.2. Prática 2 - Criando arte com pontilhismo usando o algoritmo de Canny</a></li>
+<li><a href="#_exemplos_do_pontilhismo_digital">2.3. Exemplos do pontilhismo digital</a></li>
+</ul>
+</li>
+<li><a href="#_bibliografia">3. Bibliografia</a></li>
 </ul>
 </div>
 </div>
@@ -1005,7 +1012,139 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </div>
 </div>
 <div class="sect1">
-<h2 id="_bibliografia">2. Bibliografia</h2>
+<h2 id="_atividades_unidade_2">2. Atividades Unidade 2</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Na unidade 2 somos introduzidos ao processamento de imagens no dominio da frequencia, onde iniciamos com a <strong>Tranformada Discreta de Fourier</strong>.</p>
+</div>
+<div class="sect2">
+<h3 id="_prática_1_obtendo_o_espectro_de_magnitude">2.1. Prática 1 - Obtendo o espectro de Magnitude</h3>
+<div class="paragraph">
+<p>Nessa prática foi obtido o espectro de magnitude da imagem abaixo:</p>
+</div>
+<div id="image-senoidal" class="imageblock">
+<div class="content">
+<img src="./figs/senoidal.png" alt="representação de uma senoide">
+</div>
+<div class="title">Figura 5. senoidal.png</div>
+</div>
+<div class="paragraph">
+<p>usando como base o arquivo <strong>dft.cpp</strong>, usando a imagem senoidal tivemos o seguinte resultado:</p>
+</div>
+<div class="sect3">
+<h4 id="_comentários_sobre_o_resultado">2.1.1. Comentários sobre o resultado</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_prática_2_criando_arte_com_pontilhismo_usando_o_algoritmo_de_canny">2.2. Prática 2 - Criando arte com pontilhismo usando o algoritmo de Canny</h3>
+<div class="paragraph">
+<p>O pontilhismo é uma técnica de pintura do século XIX, popularizada por Georges Seurat e Paul Signac, que utiliza pequenos pontos de cores puras justapostos para criar imagens. O efeito visual resulta da fusão óptica dessas cores pelo olhar do observador, em vez de pela mistura na paleta. Essa técnica confere luminosidade e vibração às obras, exigindo paciência e precisão do artista.</p>
+</div>
+<div class="paragraph">
+<p>Usando o algoritmo de Canny para detecção de bordas foi criado o arquivo <a href="https://github.com/CarlosG18/pdi_dca0445">cannypoints.cpp</a> para criar uma forma de realizar uma simulação do pontilhismo computacionalmente. Basicamente foram usados como base para a criação desse arquivo os códigos dos exemplos do <strong>canny.cpp</strong> e <strong>pontilhismo.cpp</strong> <a href="https://agostinhobritojr.github.io/tutorial/pdi/canny.html">que estão disponiveis aqui</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="_etapas_do_desenvolvimento_da_solução">2.2.1. Etapas do desenvolvimento da solução</h4>
+<div class="paragraph">
+<p>basicamente o efeito do pontilhismo é realizado no seguinte trecho:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="cpp"><span></span><span class="tok-k">for</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">k</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">MIN_LIMIAR</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">k</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-n">MAX_LIMIAR</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">k</span><span class="tok-o">+=</span><span class="tok-mi">1</span><span class="tok-p">){</span>
+<span class="tok-w">    </span><span class="tok-n">canny_generate</span><span class="tok-p">(</span><span class="tok-n">k</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-n">raio</span><span class="tok-w"> </span><span class="tok-o">-=</span><span class="tok-w"> </span><span class="tok-n">decremento</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-k">auto</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-n">xrange</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">      </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">shuffle</span><span class="tok-p">(</span><span class="tok-n">yrange</span><span class="tok-p">.</span><span class="tok-n">begin</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">yrange</span><span class="tok-p">.</span><span class="tok-n">end</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">default_random_engine</span><span class="tok-p">(</span><span class="tok-n">seed</span><span class="tok-p">));</span>
+<span class="tok-w">      </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-k">auto</span><span class="tok-w"> </span><span class="tok-n">j</span><span class="tok-w"> </span><span class="tok-o">:</span><span class="tok-w"> </span><span class="tok-n">yrange</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">i</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">rand</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">JITTER</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-w"> </span><span class="tok-n">JITTER</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">j</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">rand</span><span class="tok-p">()</span><span class="tok-w"> </span><span class="tok-o">%</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-mi">2</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">JITTER</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-w"> </span><span class="tok-n">JITTER</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-n">coeficient_canny</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">border</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-n">uchar</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">);</span><span class="tok-w"> </span><span class="tok-c1">// Índices corretos para acessar o pixel</span>
+<span class="tok-w">        </span><span class="tok-k">if</span><span class="tok-p">(</span><span class="tok-n">coeficient_canny</span><span class="tok-w"> </span><span class="tok-o">!=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">){</span>
+<span class="tok-w">            </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Vec3b</span><span class="tok-w"> </span><span class="tok-n">color</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">original</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Vec3b</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">x</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-p">);</span><span class="tok-w"> </span><span class="tok-c1">// Obter cor RGB do pixel</span>
+<span class="tok-w">            </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">circle</span><span class="tok-p">(</span><span class="tok-n">points</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Point</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">),</span><span class="tok-w"> </span><span class="tok-n">raio</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Scalar</span><span class="tok-p">(</span><span class="tok-n">color</span><span class="tok-p">[</span><span class="tok-mi">0</span><span class="tok-p">],</span><span class="tok-w"> </span><span class="tok-n">color</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">],</span><span class="tok-w"> </span><span class="tok-n">color</span><span class="tok-p">[</span><span class="tok-mi">2</span><span class="tok-p">]),</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">FILLED</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">LINE_AA</span><span class="tok-p">);</span>
+<span class="tok-w">        </span><span class="tok-p">}</span>
+<span class="tok-w">      </span><span class="tok-p">}</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+<span class="tok-w">  </span><span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>É percorrido um for onde o valor da variavel k estará sendo acrescentada de uma unidade dentro da faixa do <strong>MIN_LIMIAR</strong> até <strong>MAX_LIMIAR</strong>;</p>
+</li>
+<li>
+<p>O valor do k será passado para a função <strong>canny_generate()</strong> onde ela aplica o algoritmo de canny e retorna na matriz <strong>border</strong> os valores de 255 para as bordas detectadas com o valor do limiar passado (k);</p>
+</li>
+<li>
+<p>O valor da variavel <strong>raio</strong> é decrementado, começando com um valor alto e com o passar das iterações vai diminuindo, onde se é calculado da seguinte maneira:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="cpp"><span></span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">calcularRaioMax</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">largura</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">altura</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-c1">// Dimensões da imagem de referência</span>
+<span class="tok-w">    </span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">largura_ref</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">2329</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">altura_ref</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">3500</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">soma_dim_ref</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">largura_ref</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">altura_ref</span><span class="tok-p">;</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Raio máximo de referência</span>
+<span class="tok-w">    </span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-kt">float</span><span class="tok-w"> </span><span class="tok-n">raio_ref</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mf">20.0f</span><span class="tok-p">;</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Calcula o raio máximo proporcional</span>
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-n">raio_ref</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">float</span><span class="tok-p">)(</span><span class="tok-n">largura</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">altura</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">/</span><span class="tok-w"> </span><span class="tok-n">soma_dim_ref</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">MAX_RAIO</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">calcularRaioMax</span><span class="tok-p">(</span><span class="tok-n">width</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">height</span><span class="tok-p">);</span>
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">faixa</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">MAX_LIMIAR</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-w"> </span><span class="tok-n">MIN_LIMIAR</span><span class="tok-p">;</span>
+<span class="tok-n">decremento</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">MAX_RAIO</span><span class="tok-w"> </span><span class="tok-o">-</span><span class="tok-w"> </span><span class="tok-n">MIN_RAIO</span><span class="tok-p">)</span><span class="tok-o">/</span><span class="tok-kt">float</span><span class="tok-p">(</span><span class="tok-n">faixa</span><span class="tok-p">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A função <strong>calcularRaioMax</strong> calcula o raio max para aquela imagem usando como referencia um parametrização que foi feito usando uma imagem de referencia e vendo que um raio max adequado era de 20. com isso uma proporção é feito com a imagem lida e um novo valor para o raio maximo é calculado e também calculado o valor do decremento que não passa o valor definido na variavel <strong>MIN_RAIO</strong>;</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>E por fim é feito o desenho do circulo com o tamanho do raio definido pelo valor da variavel <strong>raio</strong> e obtido as cores da imagem original e replicado na matriz points.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exemplos_do_pontilhismo_digital">2.3. Exemplos do pontilhismo digital</h3>
+<div id="paisagem" class="imageblock">
+<div class="content">
+<img src="./figs/paisagem2.jpg" alt="paisagem">
+</div>
+<div class="title">Figura 6. paisagem2.jpg</div>
+</div>
+<div id="paisagem-points" class="imageblock">
+<div class="content">
+<img src="./figs/paisagem2points.png" alt="pontilhismo">
+</div>
+<div class="title">Figura 7. paisagem2points.png</div>
+</div>
+<div id="palmeiras" class="imageblock">
+<div class="content">
+<img src="./figs/palmeiras.jpg" alt="palmeiras">
+</div>
+<div class="title">Figura 8. palmeiras.jpg</div>
+</div>
+<div id="palmeiras-points" class="imageblock">
+<div class="content">
+<img src="./figs/palmeiraspoints.png" alt="palmeiras pontilhismo">
+</div>
+<div class="title">Figura 9. palmeiraspoints.png</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bibliografia">3. Bibliografia</h2>
 <div class="sectionbody">
 <div class="ulist bibliography">
 <ul class="bibliography">
@@ -1022,7 +1161,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2024-11-08 23:49:28 -0300
+Última atualização 2024-12-10 22:05:51 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
