@@ -14,6 +14,8 @@ Na Unidade 1 da disciplina de `Processamento Digital de Imagens`, foram abordado
 
 ## 🚀 Unidade II
 
+- resposta da lista 2 ![esquema da resolução da lista](./docs/listas/resposta_lista2.svg)
+
 ## 🚀 Unidade III
 
 ### 🎯 Atividades/projetos
