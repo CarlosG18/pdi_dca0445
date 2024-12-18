@@ -14,6 +14,8 @@ Na Unidade 1 da disciplina de `Processamento Digital de Imagens`, foram abordado
 
 ## 🚀 Unidade II
 
+Na Unidade 2 da disciplina de `Processamento Digital de Imagens`, aprofundamos nossos estudos com técnicas mais avançadas para o tratamento e análise de imagens digitais. Iniciamos com a **Transformada de Fourier**, onde estudamos a representação de imagens no domínio da frequência e suas aplicações na análise de componentes de frequência baixa e alta. Em seguida, exploramos a **Filtragem no domínio da frequência**, aplicando filtros para a remoção de ruídos e o realce de detalhes específicos nas imagens. Na aula sobre **Restauração de imagens**, aprendemos a corrigir imagens degradadas, recuperando informações perdidas através de técnicas matemáticas e computacionais. Finalizamos a unidade com o estudo da **Segmentação de imagens e limiarização**. A segmentação permite dividir a imagem em regiões de interesse, facilitando a análise e o processamento de objetos, enquanto a limiarização é aplicada para a binarização de imagens, destacando elementos específicos com base em seus níveis de intensidade.
+
 - resposta da lista 2 ![esquema da resolução da lista](./docs/listas/resposta_lista2.svg)
 
 ## 🚀 Unidade III
