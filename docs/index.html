@@ -528,6 +528,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 <li><a href="#_prática_1_obtendo_o_espectro_de_magnitude">2.1. Prática 1 - Obtendo o espectro de Magnitude</a></li>
 <li><a href="#_prática_2_criando_arte_com_pontilhismo_usando_o_algoritmo_de_canny">2.2. Prática 2 - Criando arte com pontilhismo usando o algoritmo de Canny</a></li>
 <li><a href="#_exemplos_do_pontilhismo_digital">2.3. Exemplos do pontilhismo digital</a></li>
+<li><a href="#_prática_3_criando_um_gif_com_imagens_geradas_pelo_algoritmo_k_means">2.4. Prática 3 - Criando um GIF com Imagens Geradas pelo Algoritmo K-Means</a></li>
 </ul>
 </li>
 <li><a href="#_bibliografia">3. Bibliografia</a></li>
@@ -1128,17 +1129,138 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </div>
 <div class="title">Figura 7. paisagem2points.png</div>
 </div>
-<div id="palmeiras" class="imageblock">
+</div>
+<div class="sect2">
+<h3 id="_prática_3_criando_um_gif_com_imagens_geradas_pelo_algoritmo_k_means">2.4. Prática 3 - Criando um GIF com Imagens Geradas pelo Algoritmo K-Means</h3>
+<div class="paragraph">
+<p>Nesta prática, utilizamos o algoritmo K-Means para segmentar imagens e, em seguida, criamos um GIF com os resultados gerados. O código base foi adaptado de um exemplo disponível online, com a modificação principal de aceitar um número máximo de clusters passado como argumento durante a execução.</p>
+</div>
+<div class="sect3">
+<h4 id="_código_fonte_do_programa">2.4.1. Código-Fonte do Programa</h4>
+<div class="paragraph">
+<p>O código abaixo implementa a execução do algoritmo K-Means em uma imagem de entrada, variando o número de clusters entre 2 e um valor máximo definido pelo usuário. O programa salva uma imagem para cada valor de K.</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<img src="./figs/palmeiras.jpg" alt="palmeiras">
+<pre class="pygments highlight"><code data-lang="cpp"><span></span><span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;cstdlib&gt;</span>
+<span class="tok-cp">#include</span><span class="tok-w"> </span><span class="tok-cpf">&lt;opencv2/opencv.hpp&gt;</span>
+
+<span class="tok-kt">void</span><span class="tok-w"> </span><span class="tok-nf">calcularKMeans</span><span class="tok-p">(</span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-o">&amp;</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">nClusters</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">nRodadas</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-k">const</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">string</span><span class="tok-o">&amp;</span><span class="tok-w"> </span><span class="tok-n">outputPrefix</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">rotulos</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">centros</span><span class="tok-p">;</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Prepara a matriz de amostras</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">samples</span><span class="tok-p">(</span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">CV_32F</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-o">++</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-o">++</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">            </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">z</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">z</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">3</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">z</span><span class="tok-o">++</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">                </span><span class="tok-n">samples</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-kt">float</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">z</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Vec3b</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">)[</span><span class="tok-n">z</span><span class="tok-p">];</span>
+<span class="tok-w">            </span><span class="tok-p">}</span>
+<span class="tok-w">        </span><span class="tok-p">}</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Executa o K-Means</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">kmeans</span><span class="tok-p">(</span><span class="tok-n">samples</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">nClusters</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">rotulos</span><span class="tok-p">,</span>
+<span class="tok-w">               </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">TermCriteria</span><span class="tok-p">(</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">TermCriteria</span><span class="tok-o">::</span><span class="tok-n">EPS</span><span class="tok-w"> </span><span class="tok-o">|</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">TermCriteria</span><span class="tok-o">::</span><span class="tok-n">COUNT</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">10000</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mf">0.0001</span><span class="tok-p">),</span>
+<span class="tok-w">               </span><span class="tok-n">nRodadas</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">KMEANS_PP_CENTERS</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">centros</span><span class="tok-p">);</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Cria a imagem rotulada</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">rotulada</span><span class="tok-p">(</span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">size</span><span class="tok-p">(),</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">type</span><span class="tok-p">());</span>
+<span class="tok-w">    </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">y</span><span class="tok-o">++</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">cols</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-o">++</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">            </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">indice</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">rotulos</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-kt">int</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-w"> </span><span class="tok-o">*</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">rows</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">);</span>
+<span class="tok-w">            </span><span class="tok-n">rotulada</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Vec3b</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">)[</span><span class="tok-mi">0</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">uchar</span><span class="tok-p">)</span><span class="tok-n">centros</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-kt">float</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">indice</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">);</span>
+<span class="tok-w">            </span><span class="tok-n">rotulada</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Vec3b</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">)[</span><span class="tok-mi">1</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">uchar</span><span class="tok-p">)</span><span class="tok-n">centros</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-kt">float</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">indice</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">1</span><span class="tok-p">);</span>
+<span class="tok-w">            </span><span class="tok-n">rotulada</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Vec3b</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">y</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">x</span><span class="tok-p">)[</span><span class="tok-mi">2</span><span class="tok-p">]</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">uchar</span><span class="tok-p">)</span><span class="tok-n">centros</span><span class="tok-p">.</span><span class="tok-n">at</span><span class="tok-o">&lt;</span><span class="tok-kt">float</span><span class="tok-o">&gt;</span><span class="tok-p">(</span><span class="tok-n">indice</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">);</span>
+<span class="tok-w">        </span><span class="tok-p">}</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Salva a imagem resultante</span>
+<span class="tok-w">    </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">string</span><span class="tok-w"> </span><span class="tok-n">outputPath</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">outputPrefix</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&quot;_k&quot;</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">to_string</span><span class="tok-p">(</span><span class="tok-n">nClusters</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-o">+</span><span class="tok-w"> </span><span class="tok-s">&quot;.jpg&quot;</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">imwrite</span><span class="tok-p">(</span><span class="tok-n">outputPath</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">rotulada</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Imagem salva: &quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">outputPath</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">endl</span><span class="tok-p">;</span>
+<span class="tok-p">}</span>
+
+<span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-nf">main</span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">argc</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-kt">char</span><span class="tok-o">**</span><span class="tok-w"> </span><span class="tok-n">argv</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">argc</span><span class="tok-w"> </span><span class="tok-o">!=</span><span class="tok-w"> </span><span class="tok-mi">4</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">cout</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Uso: kmeans entrada.jpg saida_prefixo max_clusters</span><span class="tok-se">\n</span><span class="tok-s">&quot;</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">maxClusters</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">atoi</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">3</span><span class="tok-p">]);</span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">maxClusters</span><span class="tok-w"> </span><span class="tok-o">&lt;</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">cerr</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Erro: o número máximo de clusters deve ser pelo menos 2.&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">endl</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">-1</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+
+<span class="tok-w">    </span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">nRodadas</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">5</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-c1">// Número de rodadas do K-Means</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Lê a imagem de entrada</span>
+<span class="tok-w">    </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">Mat</span><span class="tok-w"> </span><span class="tok-n">img</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">imread</span><span class="tok-p">(</span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">1</span><span class="tok-p">],</span><span class="tok-w"> </span><span class="tok-n">cv</span><span class="tok-o">::</span><span class="tok-n">IMREAD_COLOR</span><span class="tok-p">);</span>
+<span class="tok-w">    </span><span class="tok-k">if</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-n">img</span><span class="tok-p">.</span><span class="tok-n">empty</span><span class="tok-p">())</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">cerr</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-s">&quot;Erro: não foi possível carregar a imagem.&quot;</span><span class="tok-w"> </span><span class="tok-o">&lt;&lt;</span><span class="tok-w"> </span><span class="tok-n">std</span><span class="tok-o">::</span><span class="tok-n">endl</span><span class="tok-p">;</span>
+<span class="tok-w">        </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">-1</span><span class="tok-p">;</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+
+<span class="tok-w">    </span><span class="tok-c1">// Executa o K-Means para cada número de clusters no intervalo</span>
+<span class="tok-w">    </span><span class="tok-k">for</span><span class="tok-w"> </span><span class="tok-p">(</span><span class="tok-kt">int</span><span class="tok-w"> </span><span class="tok-n">nClusters</span><span class="tok-w"> </span><span class="tok-o">=</span><span class="tok-w"> </span><span class="tok-mi">2</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">nClusters</span><span class="tok-w"> </span><span class="tok-o">&lt;=</span><span class="tok-w"> </span><span class="tok-n">maxClusters</span><span class="tok-p">;</span><span class="tok-w"> </span><span class="tok-n">nClusters</span><span class="tok-o">++</span><span class="tok-p">)</span><span class="tok-w"> </span><span class="tok-p">{</span>
+<span class="tok-w">        </span><span class="tok-n">calcularKMeans</span><span class="tok-p">(</span><span class="tok-n">img</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">nClusters</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">nRodadas</span><span class="tok-p">,</span><span class="tok-w"> </span><span class="tok-n">argv</span><span class="tok-p">[</span><span class="tok-mi">2</span><span class="tok-p">]);</span>
+<span class="tok-w">    </span><span class="tok-p">}</span>
+
+<span class="tok-w">    </span><span class="tok-k">return</span><span class="tok-w"> </span><span class="tok-mi">0</span><span class="tok-p">;</span>
+<span class="tok-p">}</span></code></pre>
 </div>
-<div class="title">Figura 8. palmeiras.jpg</div>
 </div>
-<div id="palmeiras-points" class="imageblock">
+</div>
+<div class="sect3">
+<h4 id="_testes_iniciais_com_o_algoritmo">2.4.2. Testes Iniciais com o Algoritmo</h4>
+<div class="paragraph">
+<p>Antes de criar o GIF, realizamos alguns testes para compreender o comportamento do algoritmo. Foram feitas as seguintes modificações no código:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>O parâmetro <code>nRodadas</code> foi ajustado para 1.</p>
+</li>
+<li>
+<p>Os centros foram inicializados de forma aleatória, usando o parâmetro <code>KMEANS_RANDOM_CENTERS</code> em vez de <code>KMEANS_PP_CENTERS</code>.</p>
+</li>
+<li>
+<p>Executamos o algoritmo 10 vezes, cada uma com configurações diferentes, e comparamos as imagens produzidas.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_análise_dos_resultados_dos_testes">2.4.3. Análise dos Resultados dos Testes</h4>
+<div class="paragraph">
+<p>Os resultados mostraram que as imagens são distintas porque os centros dos grupos são definidos de forma aleatória e apenas uma iteração é realizada. Sem a recalculação dos centros, as imagens apresentaram diferenças significativas entre si, destacando a importância de múltiplas iterações para a convergência do algoritmo.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_criação_do_gif">2.4.4. Criação do GIF</h4>
+<div class="paragraph">
+<p>Após os testes, utilizamos a biblioteca <code>magick</code> para criar um GIF a partir das imagens geradas. O comando utilizado foi o seguinte:</p>
+</div>
+<div class="listingblock">
 <div class="content">
-<img src="./figs/palmeiraspoints.png" alt="palmeiras pontilhismo">
+<pre class="pygments highlight"><code data-lang="bash"><span></span>./kmeans<span class="tok-w"> </span>entrada.jpg<span class="tok-w"> </span>saida_prefixo<span class="tok-w"> </span><span class="tok-m">15</span>
+magick<span class="tok-w"> </span>convert<span class="tok-w"> </span>-delay<span class="tok-w"> </span><span class="tok-m">10</span><span class="tok-w"> </span>-loop<span class="tok-w"> </span><span class="tok-m">0</span><span class="tok-w"> </span>saida_prefixo_k*.jpg<span class="tok-w"> </span>output.gif</code></pre>
 </div>
-<div class="title">Figura 9. palmeiraspoints.png</div>
+</div>
+<div class="paragraph">
+<p>Neste caso, o programa gerou 15 imagens, variando o valor de K entre 2 e 15. O comando <code>magick</code> então combinou essas imagens em um GIF animado.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_resultado_final">2.4.5. Resultado Final</h4>
+<div class="paragraph">
+<p>O GIF gerado mostra a evolução da segmentação conforme o número de clusters aumenta, ilustrando o funcionamento do algoritmo K-Means.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/home/eduardo09/gabriel/ufrn/semestres/2024.2/pdi/pdi_dca0445/labs/uni2/kmeans/build/output.gif" alt="saida do gif">
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1161,7 +1283,7 @@ pre.pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2024-12-10 22:05:51 -0300
+Última atualização 2025-01-06 13:03:20 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
